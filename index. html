@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>یوار - دستیار شخصی هوشمند</title>
+    <title>دستیار هوشمند یووار (Yovar)</title>
     <style>
         :root {
             --bg-color: #0b070c;
@@ -11,16 +11,18 @@
             --text-color: #fce7f3;
             --accent-red: #e11d48;
             --accent-pink: #f43f5e;
-            --accent-glow: rgba(244, 63, 94, 0.3);
+            --accent-glow: rgba(246, 63, 94, 0.3);
             --border-color: #2e1c28;
         }
-        body.pms-mode {
+
+        body.pas-node {
             --bg-color: #1f0c14;
             --card-bg: #321422;
-            --accent-red: #fb7185;
+            --text-color: #f7f1e5;
             --accent-pink: #fda4af;
             --border-color: #58223c;
         }
+
         body {
             font-family: Tahoma, sans-serif;
             background-color: var(--bg-color);
@@ -30,6 +32,7 @@
             padding-bottom: 95px;
             transition: background 0.4s ease;
         }
+
         header {
             background: linear-gradient(135deg, #0b070c, #1f0c14, #2e1c28);
             border-bottom: 2px solid var(--accent-red);
@@ -42,6 +45,7 @@
             flex-direction: column;
             align-items: center;
         }
+
         .app-logo {
             width: 80px;
             height: 80px;
@@ -51,9 +55,12 @@
             margin-bottom: 12px;
             box-shadow: 0 0 20px var(--accent-pink);
         }
+
         header h1 { margin: 0; font-size: 24px; color: #fff; text-shadow: 0 0 10px var(--accent-pink); }
         header p { margin: 6px 0 0; font-size: 12px; opacity: 0.85; }
+
         .container { padding: 15px; max-width: 600px; margin: auto; }
+
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -62,81 +69,73 @@
             margin-bottom: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        .card h3 { margin-top: 0; font-size: 16px; color: var(--accent-pink); display: flex; justify-content: space-between; align-items: center; }
-        .btn {
-            background: linear-gradient(135deg, #e11d48, #be123c);
+
+        .chat-container {
+            height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .msg-yovar {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-pink);
+            color: #fff;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg-user {
+            background: var(--accent-pink);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-family: Tahoma, sans-serif;
+        }
+
+        button {
+            background: var(--accent-pink);
             color: white;
             border: none;
-            padding: 12px 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: Tahoma;
-            font-size: 13px;
-            width: 100%;
-            margin-top: 8px;
-            transition: 0.2s;
-            box-shadow: 0 3px 10px rgba(225, 29, 72, 0.3);
-        }
-        .btn:active { transform: scale(0.97); }
-        .btn-green { background: linear-gradient(135deg, #16a34a, #15803d); box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3); }
-        .btn-blue { background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3); }
-        .toggle-switch {
-            display: flex;
-            background: rgba(0,0,0,0.3);
-            border-radius: 14px;
-            padding: 5px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-        }
-        .toggle-btn {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            font-size: 12px;
+            padding: 12px 20px;
             border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
-            color: #aaa;
-        }
-        .toggle-btn.active {
-            background: var(--accent-red);
-            color: white;
             font-weight: bold;
-            box-shadow: 0 0 12px var(--accent-pink);
+            font-family: Tahoma, sans-serif;
+            transition: transform 0.2s, background 0.2s;
         }
-        .task-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 13px;
-        }
-        .task-info { display: flex; flex-direction: column; flex: 1; margin-left: 10px; }
-        .task-time-badge {
-            font-size: 11px;
-            color: var(--accent-pink);
-            background: rgba(244, 63, 94, 0.1);
-            padding: 2px 6px;
-            border-radius: 6px;
-            width: fit-content;
-            margin-top: 3px;
-            cursor: pointer;
-            border: 1px dashed var(--accent-pink);
-        }
-        .task-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--accent-red); cursor: pointer; }
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            margin-bottom: 12px;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: white;
-            font-family: Tahoma;
-            box-sizing: border-box;
-        }
+
+        button:active { transform: scale(0.95); }
+
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -146,384 +145,98 @@
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
-            padding: 12px 0;
+            padding: 10px 0;
             z-index: 1000;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
         }
+
         .nav-item {
             text-align: center;
-            font-size: 11px;
-            color: #94a3b8;
+            font-size: 12px;
+            color: #94b3bd;
             cursor: pointer;
             flex: 1;
         }
-        .nav-item.active { color: var(--accent-pink); font-weight: bold; text-shadow: 0 0 8px var(--accent-pink); }
-        .nav-item span { display: block; font-size: 20px; margin-bottom: 3px; }
+
+        .nav-item.active {
+            color: var(--accent-pink);
+            font-weight: bold;
+        }
+
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .chat-box {
-            height: 190px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
-            font-size: 13px;
-            border: 1px solid var(--border-color);
-        }
-        .chat-msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 10px; max-width: 85%; line-height: 1.4; }
-        .chat-msg.yovar { background: #261622; margin-left: auto; border: 1px solid var(--border-color); }
-        .chat-msg.user { background: var(--accent-red); margin-right: auto; }
+
+        h3 { margin-top: 0; color: var(--accent-pink); font-size: 18px; }
     </style>
 </head>
 <body>
 
-<header>
-    <!-- لوگوی فانتزی با تم فانوس و شکوفه‌های گیلاس قرمز و مشکی -->
-    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200&auto=format&fit=crop&q=80" alt="لوگوی یوار" class="app-logo">
-    <h1>🌸 یوار (Yovar)</h1>
-    <p id="yovar-status">دستیار سخت‌گیر، رفیق فانتزی و معلم صمیمی تو آماده‌ست!</p>
-</header>
+    <header>
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb04017?w=800&auto=format&fit=crop&q=80" alt="لوگو" class="app-logo">
+        <h1>دستیار هوشمند یووار (Yovar)</h1>
+        <p>دستیار سخت‌گیر، متعهد، صبور و معلم خصوصی تو.</p>
+    </header>
 
-<div class="container">
-    <!-- وضعیت مود -->
-    <div class="toggle-switch">
-        <div class="toggle-btn active" id="btn-strict" onclick="setMode('strict')">⚔️ حالت سخت‌گیر (نظامی)</div>
-        <div class="toggle-btn" id="btn-pms" onclick="setMode('pms')">🌸 روزهای خاص (پریود / PMS)</div>
-    </div>
-
-    <!-- تب ۱: داشبورد اصلی (نمازها، قرآن و کارهای خانه با قابلیت ویرایش ساعت) -->
-    <div id="tab-dashboard" class="tab-content active">
-        <!-- نمازهای پنج‌گانه -->
-        <div class="card">
-            <h3>🕌 عبادات و ساعات نماز (قابل تغییر)</h3>
-            <div id="namaz-container"></div>
-        </div>
-
-        <!-- کارهای خانه و بیرون -->
-        <div class="card">
-            <h3>🧹 نظافت، کارهای خانه و بیرون</h3>
-            <div id="home-tasks-container"></div>
-            
-            <h4 style="font-size: 13px; margin-top: 15px; color: var(--accent-pink);">+ افزودن کار منزل یا وظیفه جدید با ساعت دلخواه:</h4>
-            <input type="text" id="new-home-name" placeholder="نام کار خانه (مثلاً تمیز کردن اتاق)">
-            <input type="text" id="new-home-time" placeholder="ساعت انجام (مثلاً ۱۱:۰۰)">
-            <button class="btn btn-blue" onclick="addHomeTask()">افزودن به کارهای خانه</button>
-        </div>
-    </div>
-
-    <!-- تب ۲: ورزش و خواب -->
-    <div id="tab-sport" class="tab-content">
-        <div class="card">
-            <h3>🏃‍♀️ کونگ‌فو، تکواندو، رقص، یوگا و قد</h3>
-            <label>انتخاب ورزش امروز:</label>
-            <select id="sport-type" onchange="saveState()">
-                <option value="kongfu">کونگ‌فو (قدرتی)</option>
-                <option value="taekwondo">تکواندو (رزمی)</option>
-                <option value="dance">رقصیدن (شاد و هوازی)</option>
-                <option value="yoga">یوگا و آرامش</option>
-                <option value="height">ورزش‌های کششی بلند شدن قد</option>
-            </select>
-            <div class="task-row"><div class="task-info"><span>انجام نرمش و استراحت ۱۵ دقیقه‌ای</span><span class="task-time-badge" onclick="editTime('workout', 'ساعت نرمش')">ساعت: ۱۷:۰۰</span></div><input type="checkbox" id="workout-done" onclick="saveState()"></div>
-        </div>
-        <div class="card">
-            <h3>🛌 ردیاب خواب (۸ تا ۹ ساعت)</h3>
-            <p>ساعت خواب دیشب: <span id="sleep-val">۸.۵</span> ساعت</p>
-            <input type="range" min="4" max="12" step="0.5" value="8.5" id="sleep-range" oninput="updateSleep(this.value)">
-            <p id="sleep-msg" style="font-size: 12px; color: #22c55e;">خوابت عالی و استاندارد بود.</p>
-        </div>
-    </div>
-
-    <!-- تب ۳: مدرسه زبان، مکالمه صوتی و امتحان -->
-    <div id="tab-lang" class="tab-content">
-        <div class="card">
-            <h3>🗣️ مدرسه زبان و مکالمه صوتی با یوار</h3>
-            <label>زبان مورد نظر:</label>
-            <select id="lang-select">
-                <option value="en">انگلیسی</option>
-                <option value="jp">ژاپنی</option>
-                <option value="cn">چینی (آوران / 500 کاراکتر)</option>
-            </select>
-            <button class="btn" onclick="startLangLesson()">دریافت درس و لغات جدید</button>
-            <div id="lang-lesson-box" style="margin-top: 10px; font-size: 13px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px;">هنوز درسی انتخاب نشده است.</div>
-            
-            <button class="btn btn-green" style="margin-top: 12px;" onclick="startVoiceSimulation()">🎙️ صحبت صوتی و محاوره با یوار</button>
-            <div id="voice-status" style="margin-top: 8px; font-size: 12px; color: var(--accent-pink);"></div>
-
-            <h4 style="margin-top: 15px; font-size: 14px;">📝 کار خانگی و امتحان</h4>
-            <button class="btn btn-blue" onclick="getHomework()">گرفتن کار خانگی (تایمر ۳۰ دقیقه‌ای)</button>
-            <div id="homework-box" style="margin-top: 10px; font-size: 13px;"></div>
-            <button class="btn btn-green" style="margin-top: 10px;" onclick="takeExam()">شروع امتحان زبان</button>
-        </div>
-    </div>
-
-    <!-- تب ۴: مالی، خوراکی و استایل -->
-    <div id="tab-money" class="tab-content">
-        <div class="card">
-            <h3>💰 مدیریت پول و جلوگیری از ولخرجی</h3>
-            <p>موجودی حساب: <span id="wallet-balance" style="color: #22c55e; font-weight: bold;">۵۰۰</span></p>
-            <input type="number" id="expense-amount" placeholder="مبلغ هزینه">
-            <input type="text" id="expense-desc" placeholder="بابت چه چیزی؟">
-            <button class="btn" onclick="addExpense()">ثبت هزینه (بررسی توسط یوار)</button>
-        </div>
-        <div class="card">
-            <h3>🥗 خط قرمز سلامتی (کنترل غذاهای مضر)</h3>
-            <p style="font-size: 12px;">مضر این هفته: <span id="bad-food-count">0</span> / 2 مجاز</p>
-            <button class="btn btn-blue" onclick="eatBadFood()">ثبت فست‌فود / شیرینی / نوشابه</button>
-        </div>
-        <div class="card">
-            <h3>👗 استایلیست کمد لباس یوار</h3>
-            <input type="text" id="my-clothes" placeholder="لباس‌های کمد (مثلاً مانتو مشکی، شلوار جین)">
-            <label>موقعیت:</label>
-            <select id="outfit-occasion">
-                <option value="home">خانه (راحت)</option>
-                <option value="out">بیرون / خرید</option>
-                <option value="sport">ورزش</option>
-            </select>
-            <button class="btn" onclick="getOutfit()">ست کردن لباس</button>
-            <p id="outfit-result" style="margin-top: 10px; font-size: 13px; color: var(--accent-pink);"></p>
-        </div>
-    </div>
-
-    <!-- تب ۵: چت و درد دل با یوار -->
-    <div id="tab-chat" class="tab-content">
-        <div class="card">
-            <h3>💬 درد دل و مکالمه با یوار</h3>
-            <div class="chat-box" id="chat-container">
-                <div class="chat-msg yovar">سلام! من یوارم. آماده‌ام تا هم کارهات رو چک کنم، هم باهات درس کار کنم و هم درد دل کنیم.</div>
+    <div class="container">
+        <!-- تب چت و گفتگو -->
+        <div id="tab-chat" class="tab-content active">
+            <div class="card">
+                <h3>🗣️ گفتگو با یووار</h3>
+                <div id="chat-container" class="chat-container">
+                    <div class="msg msg-yovar">سلام! من یووار هستم. با هر زبانی که راحت‌تری برنامه‌ت رو پیش ببر، من حواسم بهت هست!</div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="chat-input" placeholder="پیام خود را بنویسید...">
+                    <button onclick="sendMessage()">ارسال</button>
+                </div>
             </div>
-            <input type="text" id="chat-input" placeholder="پیام خود را بنویسید...">
-            <button class="btn" onclick="sendChatMessage()">ارسال پیام به یوار</button>
         </div>
     </div>
-</div>
 
-<!-- منوی پایین -->
-<div class="nav-bar">
-    <div class="nav-item active" onclick="switchTab('dashboard', this)"><span>📋</span>داشبورد</div>
-    <div class="nav-item" onclick="switchTab('sport', this)"><span>🧘‍♀️</span>ورزش</div>
-    <div class="nav-item" onclick="switchTab('lang', this)"><span>🗣️</span>زبان</div>
-    <div class="nav-item" onclick="switchTab('money', this)"><span>💰</span>مالی</div>
-    <div class="nav-item" onclick="switchTab('chat', this)"><span>💬</span>چت</div>
-</div>
+    <div class="nav-bar">
+        <div class="nav-item active" onclick="switchTab('chat')">💬 چت</div>
+    </div>
 
-<script>
-    let currentMode = 'strict';
-    
-    // زمان‌بندی نمازها با قابلیت ذخیره تغییرات
-    let namazTimes = JSON.parse(localStorage.getItem('yovar_namaz_times')) || [
-        {id: 'namaz-sobh', name: 'نماز صبح', time: '۰۵:۱۵', done: false},
-        {id: 'namaz-zohr', name: 'نماز ظهر', time: '۱۳:۰۰', done: false},
-        {id: 'namaz-asr', name: 'نماز عصر', time: '۱۶:۳۰', done: false},
-        {id: 'namaz-maghrib', name: 'نماز مغرب', time: '۱۸:۲۰', done: false},
-        {id: 'namaz-esha', name: 'نماز عشاء', time: '۱۹:۴۵', done: false},
-        {id: 'quran', name: '📖 تلاوت قرآن', time: 'دلخواه', done: false}
-    ];
-
-    // کارهای خانه با قابلیت تغییر ساعت و افزودن کار جدید
-    let homeTasks = JSON.parse(localStorage.getItem('yovar_home_tasks')) || [
-        {id: 'bed', name: 'جمع کردن جای خواب', time: '۰۷:۳۰', done: false},
-        {id: 'dishes', name: 'ظرف شستن', time: '۱۴:۰۰', done: false},
-        {id: 'vacuum', name: 'جارو کشیدن', time: '۱۶:۰۰', done: false},
-        {id: 'bath', name: '🛁 حمام هفتگی', time: 'هفته‌ای ۲ بار', done: false},
-        {id: 'outside', name: '🛒 کارهای بیرون از خانه', time: 'بر حسب نیاز', done: false}
-    ];
-
-    let badFoodCount = parseInt(localStorage.getItem('yovar_bad_food')) || 0;
-    let wallet = parseInt(localStorage.getItem('yovar_wallet')) || 500;
-
-    function setMode(mode) {
-        currentMode = mode;
-        const body = document.body;
-        const status = document.getElementById('yovar-status');
-        if(mode === 'pms') {
-            body.classList.add('pms-mode');
-            document.getElementById('btn-pms').classList.add('active');
-            document.getElementById('btn-strict').classList.remove('active');
-            status.innerText = "🌸 حالت روزهای خاص فعال شد. کاملاً هوات رو دارم، استراحت کن.";
-        } else {
-            body.classList.remove('pms-mode');
-            document.getElementById('btn-strict').classList.add('active');
-            document.getElementById('btn-pms').classList.remove('active');
-            status.innerText = "⚔️ حالت سخت‌گیر فعال است! حق نداری تنبلی کنی!";
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
-    }
 
-    function switchTab(tabId, element) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        document.getElementById('tab-' + tabId).classList.add('active');
-        element.classList.add('active');
-    }
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const container = document.getElementById('chat-container');
+            const text = input.value.trim();
+            
+            if (!text) return;
 
-    function renderNamaz() {
-        const container = document.getElementById('namaz-container');
-        container.innerHTML = '';
-        namazTimes.forEach((n, index) => {
-            container.innerHTML += `
-                <div class="task-row">
-                    <div class="task-info">
-                        <span>${n.name}</span>
-                        <span class="task-time-badge" onclick="editNamazTime(${index})" title="برای تغییر ساعت کلیک کن">⏰ ساعت: ${n.time} (تغییر)</span>
-                    </div>
-                    <input type="checkbox" ${n.done ? 'checked' : ''} onclick="toggleNamaz(${index})">
-                </div>
-            `;
-        });
-    }
-
-    function editNamazTime(index) {
-        const newTime = prompt(`ساعت جدید برای "${namazTimes[index].name}" را وارد کن (مثلاً ۰۵:۳۰):`, namazTimes[index].time);
-        if(newTime) {
-            namazTimes[index].time = newTime;
-            localStorage.setItem('yovar_namaz_times', JSON.stringify(namazTimes));
-            renderNamaz();
-        }
-    }
-
-    function toggleNamaz(index) {
-        namazTimes[index].done = !namazTimes[index].done;
-        localStorage.setItem('yovar_namaz_times', JSON.stringify(namazTimes));
-    }
-
-    function renderHomeTasks() {
-        const container = document.getElementById('home-tasks-container');
-        container.innerHTML = '';
-        homeTasks.forEach((t, index) => {
-            container.innerHTML += `
-                <div class="task-row">
-                    <div class="task-info">
-                        <span>${t.name}</span>
-                        <span class="task-time-badge" onclick="editHomeTime(${index})" title="برای تغییر ساعت کلیک کن">⏰ ساعت: ${t.time} (تغییر)</span>
-                    </div>
-                    <input type="checkbox" ${t.done ? 'checked' : ''} onclick="toggleHome(${index})">
-                </div>
-            `;
-        });
-    }
-
-    function editHomeTime(index) {
-        const newTime = prompt(`ساعت جدید برای "${homeTasks[index].name}" را وارد کن:`, homeTasks[index].time);
-        if(newTime) {
-            homeTasks[index].time = newTime;
-            localStorage.setItem('yovar_home_tasks', JSON.stringify(homeTasks));
-            renderHomeTasks();
-        }
-    }
-
-    function toggleHome(index) {
-        homeTasks[index].done = !homeTasks[index].done;
-        localStorage.setItem('yovar_home_tasks', JSON.stringify(homeTasks));
-    }
-
-    function addHomeTask() {
-        const name = document.getElementById('new-home-name').value;
-        const time = document.getElementById('new-home-time').value;
-        if(!name) return alert("لطفاً نام کار خانه را وارد کن.");
-        homeTasks.push({id: 'custom_' + Date.now(), name, time: time || 'دلخواه', done: false});
-        localStorage.setItem('yovar_home_tasks', JSON.stringify(homeTasks));
-        document.getElementById('new-home-name').value = '';
-        document.getElementById('new-home-time').value = '';
-        renderHomeTasks();
-    }
-
-    function editTime(type, title) {
-        const newT = prompt(`ساعت جدید برای ${title} را وارد کن:`, "۱۷:۰۰");
-        if(newT) {
-            alert("ساعت به‌روزرسانی شد!");
-        }
-    }
-
-    function loadState() {
-        renderNamaz();
-        renderHomeTasks();
-        document.getElementById('wallet-balance').innerText = wallet;
-        document.getElementById('bad-food-count').innerText = badFoodCount;
-    }
-
-    function updateSleep(val) {
-        document.getElementById('sleep-val').innerText = val;
-    }
-
-    function startLangLesson() {
-        const lang = document.getElementById('lang-select').value;
-        const box = document.getElementById('lang-lesson-box');
-        if(lang === 'cn') {
-            box.innerHTML = "<b>درس چینی (آوران):</b><br>1. 你好 (Nǐ hǎo) = سلام<br>2. 谢谢 (Xièxiè) = تشکر<br>3. 我 (Wǒ) = من";
-        } else if(lang === 'jp') {
-            box.innerHTML = "<b>درس ژاپنی:</b><br>1. こんにちは (Konnichiwa) = سلام<br>2. ありがとう (Arigatou) = ممنون";
-        } else {
-            box.innerHTML = "<b>درس انگلیسی:</b><br>1. Discipline = نظم<br>2. Success = موفقیت";
-        }
-    }
-
-    function startVoiceSimulation() {
-        const status = document.getElementById('voice-status');
-        status.innerHTML = "🎙️ یوار در حال مکالمه صوتی... (یوار پاسخ داد: عالی بود! جمله بعدی را بگو)";
-        if ('speechSynthesis' in window) {
-            let utterance = new SpeechSynthesisUtterance("سلام! من یوارم. آماده‌ی مکالمه صوتی با تو هستم. جمله‌ات را بگو.");
-            utterance.lang = 'fa-IR';
-            window.speechSynthesis.speak(utterance);
-        }
-    }
-
-    function getHomework() {
-        document.getElementById('homework-box').innerHTML = "⏳ <b>کار خانگی:</b> ۵ بار نوشتن لغات + ۳ جمله مکالمه صوتی. <br><span style='color:var(--accent-red);'>مهلت: ۳۰ دقیقه!</span>";
-    }
-
-    function takeExam() {
-        alert("امتحان زبان شروع شد! یوار: پاسخ صحیح را انتخاب کن و امتیاز بگیر.");
-    }
-
-    function addExpense() {
-        const amt = parseInt(document.getElementById('expense-amount').value);
-        if(!amt) return;
-        if(currentMode === 'strict' && amt > 100) {
-            alert("⚔️ یوار اجازه خرید غیرضروری را نمی‌دهد!");
-            return;
-        }
-        wallet -= amt;
-        localStorage.setItem('yovar_wallet', wallet);
-        document.getElementById('wallet-balance').innerText = wallet;
-        alert(`هزینه ثبت شد. موجودی: ${wallet}`);
-    }
-
-    function eatBadFood() {
-        badFoodCount++;
-        localStorage.setItem('yovar_bad_food', badFoodCount);
-        document.getElementById('bad-food-count').innerText = badFoodCount;
-        if(badFoodCount > 2) {
-            alert("🚨 اخطار خط قرمز سلامتی! یک تمرین ورزشی تنبیهی اضافه شد!");
-        } else {
-            alert("ثبت شد. مراقب باش!");
-        }
-    }
-
-    function getOutfit() {
-        const clothes = document.getElementById('my-clothes').value;
-        const occasion = document.getElementById('outfit-occasion').value;
-        const res = document.getElementById('outfit-result');
-        if(!clothes) {
-            res.innerText = "لطفاً اول لباس‌های کمد را وارد کن.";
-            return;
-        }
-        res.innerText = `👗 پیشنهاد یوار (${occasion}): ترکیب «${clothes}» بسیار شیک است!`;
-    }
-
-    function sendChatMessage() {
-        const input = document.getElementById('chat-input');
-        const container = document.getElementById('chat-container');
-        if(!input.value) return;
-        container.innerHTML += `<div class="chat-msg user">${input.value}</div>`;
-        input.value = '';
-        setTimeout(() => {
-            container.innerHTML += `<div class="chat-msg yovar">حواسم به همه‌چیز هست، با قدرت ادامه بده!</div>`;
+            // نمایش پیام کاربر
+            container.innerHTML += `<div class="msg msg-user">${text}</div>`;
+            input.value = '';
             container.scrollTop = container.scrollHeight;
-        }, 500);
-    }
 
-    window.onload = loadState;
-</script>
+            // پاسخ خودکار یووار
+            setTimeout(() => {
+                const replies = [
+                    "آفرین قهرمانی که با انرژی ادامه میدهی! ادامه بده.",
+                    "من همیشه هوای تلاش‌های تو رو دارم.",
+                    "خیلی عالیه! خستگی معنا نداره، به هدفت فکر کن.",
+                    "با قدرت ادامه بده، من قدم به قدم باهات هستم."
+                ];
+                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                container.innerHTML += `<div class="msg msg-yovar">${randomReply}</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 500);
+        }
 
+        // فعال‌سازی ارسال با کلید اینتر
+        document.getElementById('chat-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
 </body>
 </html>
